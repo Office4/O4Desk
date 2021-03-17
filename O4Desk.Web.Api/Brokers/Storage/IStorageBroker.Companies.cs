@@ -11,7 +11,7 @@ namespace O4Desk.Web.Api.Brokers.Storage
         public IQueryable<Company> SelectAllCompanies();
         public ValueTask<Company> SelectCompanyByIdAsync(Guid companyId);
         public ValueTask<Company> UpdateCompanyAsync(Company company);
-        public ValueTask<Company> DeleteContactAsync(Company company);
+        public ValueTask<Company> DeleteCompanyAsync(Company company);
 
     }
 }
