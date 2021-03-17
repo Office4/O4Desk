@@ -30,13 +30,16 @@ namespace O4Desk.Web.Api.Brokers.Storage
             return await Companies.FindAsync(companyId);
         }
 
-
-        public ValueTask<Company> DeleteContactAsync(Company company)
+        public async ValueTask<Company> UpdateCompanyAsync(Company company)
         {
-            throw new NotImplementedException();
+            EntityEntry<Company> companyEntityEntry = this.Companies.Update(company);
+            await this.SaveChangesAsync();
+
+            return companyEntityEntry.Entity;
         }
 
-        public ValueTask<Company> UpdateContactAsync(Company company)
+
+        public ValueTask<Company> DeleteContactAsync(Company company)
         {
             throw new NotImplementedException();
         }
