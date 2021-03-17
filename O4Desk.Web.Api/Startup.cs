@@ -5,8 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using O4Desk.Web.Api.Brokers.DateTime;
 using O4Desk.Web.Api.Brokers.Logging;
 using O4Desk.Web.Api.Brokers.Storage;
+using O4Desk.Web.Api.Services.Companies;
 
 namespace O4Desk.Web.Api
 {
@@ -25,6 +27,9 @@ namespace O4Desk.Web.Api
             services.AddScoped<IStorageBroker, StorageBroker>();
             services.AddScoped<ILogger, Logger<LoggingBroker>>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
+            services.AddTransient<IDateTimeBroker, DateTimeBroker>();
+
+            services.AddTransient<ICompanyService, CompanyService>();
 
             services.AddSwaggerGen(c =>
             {
