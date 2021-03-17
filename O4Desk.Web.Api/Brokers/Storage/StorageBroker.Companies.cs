@@ -1,5 +1,6 @@
 ﻿using EFxceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using O4Desk.Web.Api.Models.Companies;
 using System;
 using System.Linq;
@@ -11,12 +12,15 @@ namespace O4Desk.Web.Api.Brokers.Storage
     {
         public DbSet<Company> Companies { get; set; }
 
-        public ValueTask<Company> DeleteContactAsync(Company company)
+        public async ValueTask<Company> InsertCompanyAsync(Company company)
         {
-            throw new NotImplementedException();
+            EntityEntry<Company> companyEntityEntry = await this.Companies.AddAsync(company);
+            await this.SaveChangesAsync();
+
+            return companyEntityEntry.Entity;
         }
 
-        public ValueTask<Company> InsertCompanyAsync(Company company)
+        public ValueTask<Company> DeleteContactAsync(Company company)
         {
             throw new NotImplementedException();
         }
