@@ -19,21 +19,19 @@ namespace O4Desk.Web.Api.Brokers.Storage
 
             return companyEntityEntry.Entity;
         }
+
         public IQueryable<Company> SelectAllCompanies() => 
             this.Companies.AsQueryable();
 
+        public async ValueTask<Company> SelectCompanyByIdAsync(Guid companyId)
+        {
+            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+            return await Companies.FindAsync(companyId);
+        }
+
 
         public ValueTask<Company> DeleteContactAsync(Company company)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Company> SelectAllCompanies()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ValueTask<Company> SelectContactByIdAsync(Guid companyId)
         {
             throw new NotImplementedException();
         }
