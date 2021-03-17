@@ -19,6 +19,9 @@ namespace O4Desk.Web.Api.Brokers.Storage
 
             return companyEntityEntry.Entity;
         }
+        public IQueryable<Company> SelectAllCompanies() => 
+            this.Companies.AsQueryable();
+
 
         public ValueTask<Company> DeleteContactAsync(Company company)
         {
