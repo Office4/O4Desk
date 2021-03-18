@@ -161,5 +161,42 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
+        [Fact]
+        public async Task ShouldDeleteCompanyAsync()
+        {
+            // given
+            Company randomCompany = CreateRandomCompany();
+            Guid companyId = randomCompany.Id;
+            Company storageCompany = randomCompany;
+            Company expectedCompany = storageCompany;
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectCompanyByIdAsync(companyId))
+                    .ReturnsAsync(storageCompany);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.DeleteCompanyAsync(storageCompany))
+                    .ReturnsAsync(expectedCompany);
+
+            // when
+            Company actualCompany =
+                await this.companyService.RemoveCompanyByIdAsync(companyId);
+
+            // then
+            actualCompany.Should().BeEquivalentTo(expectedCompany);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectCompanyByIdAsync(companyId),
+                    Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.DeleteCompanyAsync(storageCompany),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
+
     }
 }
