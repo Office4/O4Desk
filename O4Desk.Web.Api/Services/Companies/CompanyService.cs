@@ -19,7 +19,9 @@ namespace O4Desk.Web.Api.Services.Companies
 
         public async ValueTask<Company> RetrieveCompanyByIdAsync(Guid companyId)
         {
-            throw new NotImplementedException();
+            Company storageCompany = await this.storageBroker.SelectCompanyByIdAsync(companyId);
+
+            return storageCompany;
         }
 
         public IQueryable<Company> RetrieveAllCompanies()
