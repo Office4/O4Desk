@@ -91,5 +91,40 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldRetrieveCompanyByIdAsync()
+        {
+            // given
+            Guid randomCompanyId = Guid.NewGuid();
+            Guid inputCompanyId = randomCompanyId;
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            Company randomCompany = CreateRandomCompany(randomDateTime);
+            Company storageCompany = randomCompany;
+            Company expectedCompany = storageCompany;
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectCompanyByIdAsync(inputCompanyId))
+                    .ReturnsAsync(storageCompany);
+
+            // when
+            Company actualCompany =
+                await this.companyService.RetrieveCompanyByIdAsync(inputCompanyId);
+
+            // then
+            actualCompany.Should().BeEquivalentTo(expectedCompany);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Never);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectCompanyByIdAsync(inputCompanyId),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
