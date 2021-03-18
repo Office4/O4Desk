@@ -39,7 +39,9 @@ namespace O4Desk.Web.Api.Services.Companies
 
         public async ValueTask<Company> ModifyCompanyAsync(Company company)
         {
-            throw new NotImplementedException();
+            Company maybeCompany = await this.storageBroker.SelectCompanyByIdAsync(company.Id);
+
+            return await this.storageBroker.UpdateCompanyAsync(company);
         }
     }
 }

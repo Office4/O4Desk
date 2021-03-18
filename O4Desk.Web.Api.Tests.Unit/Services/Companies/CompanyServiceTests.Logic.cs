@@ -83,10 +83,6 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
                 broker.SelectCompanyByIdAsync(companyId),
                     Times.Once);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
             this.storageBrokerMock.Verify(broker =>
                 broker.UpdateCompanyAsync(inputCompany),
                     Times.Once);
