@@ -5,6 +5,7 @@ using Xunit;
 using Moq;
 using FluentAssertions;
 using Force.DeepCloner;
+using System.Linq;
 
 namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
 {
@@ -126,5 +127,39 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldRetrieveAllCompanies()
+        {
+            // given
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            IQueryable<Company> randomCompanys = CreateRandomCompanies(randomDateTime);
+            IQueryable<Company> storageCompanys = randomCompanys;
+            IQueryable<Company> expectedCompanys = storageCompanys;
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectAllCompanies())
+                    .Returns(storageCompanys);
+
+            // when
+            IQueryable<Company> actualCompanys =
+                this.companyService.RetrieveAllCompanies();
+
+            // then
+            actualCompanys.Should().BeEquivalentTo(expectedCompanys);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Never);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectAllCompanies(),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
     }
 }

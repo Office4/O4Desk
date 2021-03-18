@@ -5,6 +5,7 @@ using O4Desk.Web.Api.Brokers.Storage;
 using O4Desk.Web.Api.Models.Companies;
 using O4Desk.Web.Api.Services.Companies;
 using System;
+using System.Linq;
 using Tynamix.ObjectFiller;
 
 namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
@@ -48,6 +49,8 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
 
             return filler;
         }
+        private static IQueryable<Company> CreateRandomCompanies(DateTimeOffset dates) =>
+            CreateCompanyFiller(dates).Create(GetRandomNumber()).AsQueryable();
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
