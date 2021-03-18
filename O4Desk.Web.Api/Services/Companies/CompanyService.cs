@@ -26,7 +26,9 @@ namespace O4Desk.Web.Api.Services.Companies
 
         public IQueryable<Company> RetrieveAllCompanies()
         {
-            throw new NotImplementedException();
+            IQueryable<Company> storageCompanies = this.storageBroker.SelectAllCompanies();
+
+            return storageCompanies;
         }
 
         public async ValueTask<Company> CreateCompanyAsync(Company company)
