@@ -29,7 +29,7 @@ namespace O4Desk.Web.Api.Services.Companies
 
         public async ValueTask<Company> CreateCompanyAsync(Company company)
         {
-            throw new NotImplementedException();
+            return await this.storageBroker.InsertCompanyAsync(company);
         }
 
         public async ValueTask<Company> RemoveCompanyByIdAsync(Guid companyId)

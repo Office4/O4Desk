@@ -36,10 +36,6 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
             // then
             actualCompany.Should().BeEquivalentTo(expectedCompany);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertCompanyAsync(inputCompany),
                     Times.Once);
