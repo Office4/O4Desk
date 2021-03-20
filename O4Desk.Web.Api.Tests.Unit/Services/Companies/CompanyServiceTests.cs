@@ -6,6 +6,7 @@ using O4Desk.Web.Api.Models.Companies;
 using O4Desk.Web.Api.Services.Companies;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 
 namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
@@ -56,5 +57,13 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
         private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
+
+
+        private static Expression<Func<Exception, bool>> SameExceptionAs(Exception expectedException)
+        {
+            return actualException => expectedException.Message ==
+                actualException.Message &&
+                expectedException.InnerException.Message == actualException.InnerException.Message;
+        }
     }
 }
