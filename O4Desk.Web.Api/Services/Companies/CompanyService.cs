@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace O4Desk.Web.Api.Services.Companies
 {
-    public class CompanyService : StandardService, ICompanyService
+    public partial class CompanyService : StandardService, ICompanyService
     {
         public CompanyService(IStorageBroker storageBroker,
             ILoggingBroker loggingBroker,
@@ -17,12 +17,15 @@ namespace O4Desk.Web.Api.Services.Companies
 
         }
 
-        public async ValueTask<Company> RetrieveCompanyByIdAsync(Guid companyId)
-        {
-            Company storageCompany = await this.storageBroker.SelectCompanyByIdAsync(companyId);
+        public ValueTask<Company> RetrieveCompanyByIdAsync(Guid companyId) =>
+            TryCatch(async () =>
+                {
+                    ValidateCompanyId(companyId);
+                    Company storageCompany = await this.storageBroker.SelectCompanyByIdAsync(companyId);
+                    ValidateStorageCompany(storageCompany, companyId);
 
-            return storageCompany;
-        }
+                    return storageCompany;
+                });
 
         public IQueryable<Company> RetrieveAllCompanies()
         {
@@ -38,7 +41,7 @@ namespace O4Desk.Web.Api.Services.Companies
 
         public async ValueTask<Company> RemoveCompanyByIdAsync(Guid companyId)
         {
-            Company maybeCompany=
+            Company maybeCompany =
                 await this.storageBroker.SelectCompanyByIdAsync(companyId);
 
             return await this.storageBroker.DeleteCompanyAsync(maybeCompany);
