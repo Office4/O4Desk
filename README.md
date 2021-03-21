@@ -8,6 +8,7 @@ At this moment nothing more than a study project implementing the ideas of [The 
 
 Current status:
 - Work on API has started. We're building an example model with companies and persons
+
 Next:
 - Client side
 - API authorization and authentication
@@ -24,4 +25,6 @@ Not certain:
 - 
 
 ## Project structure / architecture
-- based on the 
+- See [The Standard by Hassan Habib](https://github.com/hassanhabib/The-Standard)
+- API - Dotnet 5 with swagger
+- Client - Blazor 
