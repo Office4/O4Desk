@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace O4Desk.Web.Api.Services.Companies
 {
-    public partial class CompanyService
+    public partial class CompanyService : StandardService, ICompanyService
     {
         private delegate ValueTask<Company> ReturningCompanyFunction();
 

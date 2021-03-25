@@ -1,14 +1,11 @@
 ﻿using O4Desk.Web.Api.Models.Companies;
 using O4Desk.Web.Api.Models.Companies.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace O4Desk.Web.Api.Services.Companies
 {
-    public partial class CompanyService
-   {
+    public partial class CompanyService : StandardService, ICompanyService
+    {
         private static void ValidateCompanyId(Guid companyId)
         {
             if (companyId == Guid.Empty)
