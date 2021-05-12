@@ -30,6 +30,7 @@ namespace O4Desk.Web.Api.Services.Companies
         public IQueryable<Company> RetrieveAllCompanies()
         {
             IQueryable<Company> storageCompanies = this.storageBroker.SelectAllCompanies();
+            ValidateStorageCompanies(storageCompanies);
 
             return storageCompanies;
         }

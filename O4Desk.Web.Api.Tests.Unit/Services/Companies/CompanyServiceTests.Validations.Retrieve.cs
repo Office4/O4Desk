@@ -114,7 +114,7 @@ namespace O4Desk.Web.Api.Tests.Unit.Services.Companies
             actualCompanys.Should().BeEquivalentTo(emptyStorageCompanys);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogWarning("No companys found in storage."),
+                broker.LogWarning("No companies found in storage."),
                     Times.Once);
 
             this.dateTimeBrokerMock.Verify(broker =>
